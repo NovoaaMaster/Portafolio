@@ -1,59 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Carlos José Novoa Reyes
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Ingeniero de Sistemas y desarrollador full stack Laravel.** Construyo sistemas de gestión comercial a la medida: ventas, inventario, facturación y reportes en una sola aplicación web, para que un negocio trabaje con datos claros y menos tareas manuales.
 
-## About Laravel
+**[Ver el portafolio en vivo](https://lucent-kheer-7301b0.netlify.app/)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Portada del portafolio con una impresora térmica en 3D que imprime un ticket](docs/capturas/portada.webp)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Sobre mí
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Trabajo con Laravel de punta a punta: diseño la base de datos, construyo la lógica del negocio y entrego interfaces que el equipo puede usar sin un manual de por medio.
 
-## Learning Laravel
+Me especializo en sistemas de gestión comercial porque ahí el software se nota: cada venta registrada, cada producto con el stock correcto y cada reporte a tiempo es trabajo que alguien deja de hacer a mano.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Proyectos: un ERP en tres sistemas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Los tres giran alrededor de PCLAP SUPPORT, mi tienda de hardware en Lima.
 
-## Laravel Sponsors
+| Sistema | Qué resuelve | Dónde verlo |
+|---|---|---|
+| **PCLAP SUPPORT** | Punto de venta, compras, inventario por número de serie y tienda web con pedidos por WhatsApp. | En producción: [pclap-support.com](https://www.pclap-support.com) |
+| **PCLAP Finanzas** | Convierte las ventas en boletas, facturas y notas de crédito electrónicas y las envía a SUNAT (entorno de pruebas), con PDF, QR, XML firmado y CDR. | [Código en GitHub](https://github.com/NovoaaMaster/Sistema-de-Finanzas-basico) |
+| **PCLAP CRM** | Clientes de la tienda y prospectos con etiquetas automáticas, tareas de seguimiento y un embudo de ventas que se ordena arrastrando tarjetas. | [Código en GitHub](https://github.com/NovoaaMaster/sistema-admin-de-recursos-humanos) |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+PCLAP SUPPORT está en producción, por eso Finanzas y el CRM lo leen con un usuario de base de datos que solo puede consultar. Ningún módulo puede modificar el sistema de la tienda.
 
-### Premium Partners
+![Sección de proyectos con los tres sistemas](docs/capturas/proyectos.webp)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Lo que hago
 
-## Contributing
+- **Sistemas de gestión comercial.** Ventas, compras, inventario, clientes y proveedores en un solo sistema, hecho a la medida de cómo opera el negocio.
+- **Facturación y reportes.** Comprobantes electrónicos, cierres de caja y reportes que muestran cómo va el negocio sin armar hojas de cálculo a mano.
+- **Paneles administrativos.** Usuarios, roles y permisos para que cada persona vea y haga solo lo que le corresponde.
+- **Integraciones y mantenimiento.** Conecto sistemas con otros servicios mediante APIs y mantengo o modernizo aplicaciones Laravel existentes.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Cómo está hecha esta página
 
-## Code of Conduct
+- Laravel 12 y Blade, con Tailwind CSS 4 y Vite 7.
+- La portada usa three.js: una impresora térmica en 3D imprime un ticket con lo que desarrollo. En equipos sin WebGL2, de gama baja o con "reducir movimiento" activado, se muestra un ticket en 2D.
+- Los proyectos salen de `config/proyectos.php`. Para agregar uno se copia un bloque; las vistas no se tocan.
+- Se publica en Netlify, que no ejecuta PHP. En cada push, Netlify compila los estilos y `php artisan portafolio:exportar` genera la página como HTML fijo (ver `netlify.toml`).
+- Pruebas automáticas con PHPUnit.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Ejecutarlo en local
 
-## Security Vulnerabilities
+Necesitas PHP 8.2 o superior, Composer y Node.js 20.19 o superior.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+git clone https://github.com/NovoaaMaster/Portafolio.git
+cd Portafolio
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php -r "touch('database/database.sqlite');"
+php artisan migrate
+npm run build
+php artisan serve                  # abre http://127.0.0.1:8000
+```
 
-## License
+Otros comandos:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan test                   # pruebas
+php artisan portafolio:exportar    # genera en dist/ la versión fija que publica Netlify
+```
+
+## Contacto
+
+- Correo: [carlosjnovoar@gmail.com](mailto:carlosjnovoar@gmail.com)
+- WhatsApp: [+51 910 318 185](https://wa.me/51910318185)
+- Portafolio: [lucent-kheer-7301b0.netlify.app](https://lucent-kheer-7301b0.netlify.app/)
