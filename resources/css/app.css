@@ -1,0 +1,314 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+    --color-carbon: #1e1e1e;
+    --color-acento: #3b82f6;
+    /* Texto secundario: 6.6:1 sobre carbón. */
+    --color-tenue: #a3a3a3;
+    --color-linea: rgb(255 255 255 / 0.1);
+}
+
+@layer base {
+    :focus-visible {
+        outline: 2px solid var(--color-acento);
+        outline-offset: 3px;
+    }
+
+    ::selection {
+        background-color: var(--color-acento);
+        color: var(--color-carbon);
+    }
+}
+
+@layer components {
+    .boton {
+        @apply inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-[0.9375rem] font-semibold transition-colors duration-200;
+    }
+
+    /* Texto carbón sobre azul: 4.5:1 (el blanco solo llega a 3.7:1). */
+    .boton-primario {
+        background-color: var(--color-acento);
+        color: var(--color-carbon);
+
+        &:hover {
+            background-color: color-mix(in oklab, var(--color-acento), white 18%);
+        }
+    }
+
+    .boton-secundario {
+        border: 1px solid rgb(255 255 255 / 0.2);
+
+        &:hover {
+            border-color: var(--color-acento);
+        }
+    }
+
+    .enlace {
+        color: var(--color-acento);
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-underline-offset: 0.3em;
+        transition: text-decoration-color 0.2s;
+
+        &:hover {
+            text-decoration-color: currentColor;
+        }
+    }
+
+    /* Cuadrícula tipo hoja de cálculo para proyectos sin captura. */
+    .visual-vacio {
+        background-color: rgb(59 130 246 / 0.06);
+        background-image:
+            linear-gradient(rgb(59 130 246 / 0.14) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(59 130 246 / 0.14) 1px, transparent 1px);
+        background-size: 28px 28px;
+        background-position: -1px -1px;
+    }
+
+    /* Ticket de la portada */
+    .ticket-ranura {
+        position: relative;
+        z-index: 1;
+        height: 0.875rem;
+        margin-inline: -0.75rem;
+        border-radius: 999px;
+        background: #0f0f0f;
+        box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.6), 0 0 0 1px var(--color-linea);
+    }
+
+    /* Recorta solo arriba: el papel sale de debajo de la ranura y la sombra queda visible. */
+    .ticket {
+        margin-top: -0.4375rem;
+        clip-path: inset(0 -3rem -4rem -3rem);
+        filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.45));
+    }
+
+    .ticket-papel {
+        background-color: #fafafa;
+        /* Borde inferior en zigzag, como papel cortado. */
+        mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 18px 100%;
+    }
+
+    /* ===== Cards de proyectos ===== */
+    .tarjeta-proyecto {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--color-linea);
+        border-radius: 0.875rem;
+        background-color: #232323;
+    }
+
+    .tarjeta-medios {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background-color: #161616;
+    }
+
+    /* Pista con scroll-snap: deslizable con el dedo aunque no haya JS. */
+    .tarjeta-pista {
+        display: flex;
+        height: 100%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        img {
+            flex: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            scroll-snap-align: start;
+        }
+    }
+
+    .tarjeta-fecha {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        border-radius: 999px;
+        padding: 0.25rem 0.625rem;
+        background-color: rgb(20 20 20 / 0.85);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+
+    .tarjeta-flecha {
+        position: absolute;
+        top: 50%;
+        display: none;
+        place-items: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        translate: 0 -50%;
+        border-radius: 999px;
+        background-color: rgb(20 20 20 / 0.75);
+        opacity: 0;
+        transition: opacity 0.2s;
+
+        svg {
+            width: 0.9rem;
+            height: 0.9rem;
+        }
+    }
+
+    /* Cápsula oscura como la fecha: los puntos se leen igual sobre capturas claras u oscuras. */
+    .tarjeta-puntos {
+        position: absolute;
+        left: 50%;
+        bottom: 0.625rem;
+        translate: -50% 0;
+        display: none;
+        align-items: center;
+        gap: 0.375rem;
+        border-radius: 999px;
+        padding: 0.3125rem 0.5rem;
+        background-color: rgb(20 20 20 / 0.7);
+
+        button {
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 999px;
+            background-color: rgb(255 255 255 / 0.45);
+            box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+            transition: width 0.2s, background-color 0.2s;
+
+            &[aria-current] {
+                width: 1rem;
+                background-color: white;
+            }
+        }
+    }
+
+    .js {
+        .tarjeta-flecha {
+            display: grid;
+        }
+
+        .tarjeta-puntos {
+            display: flex;
+        }
+    }
+
+    /* Flechas visibles al pasar el mouse o al navegar con teclado; en táctil siempre. */
+    .tarjeta-medios:hover .tarjeta-flecha,
+    .tarjeta-medios:focus-within .tarjeta-flecha {
+        opacity: 1;
+    }
+
+    @media (hover: none) {
+        .tarjeta-flecha {
+            opacity: 1;
+        }
+    }
+
+    .tarjeta-etiqueta {
+        border: 1px solid var(--color-linea);
+        border-radius: 0.375rem;
+        padding: 0.25rem 0.625rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: var(--color-tenue);
+    }
+
+    .tarjeta-enlace {
+        color: var(--color-tenue);
+        transition: color 0.2s;
+
+        &:hover {
+            color: white;
+        }
+    }
+
+    /* Escena 3D de la portada: reemplaza al ticket 2D solo cuando <html> tiene .con-3d. */
+    .escena-ticket {
+        display: none;
+    }
+
+    .con-3d .escena-ticket {
+        display: block;
+        aspect-ratio: 4 / 5;
+        opacity: 0;
+        transition: opacity 0.8s ease-out;
+    }
+
+    .con-3d .escena-ticket.lista {
+        opacity: 1;
+    }
+
+    .con-3d .ticket-2d {
+        display: none;
+    }
+
+    .ticket-codigo {
+        background: repeating-linear-gradient(
+            90deg,
+            var(--color-carbon) 0 2px,
+            transparent 2px 4px,
+            var(--color-carbon) 4px 5px,
+            transparent 5px 8px,
+            var(--color-carbon) 8px 11px,
+            transparent 11px 12px
+        );
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Única animación de carga: el ticket sale de la ranura y se imprimen sus líneas. */
+    .ticket-papel {
+        animation: ticket-sale 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+    }
+
+    .ticket-linea {
+        animation: ticket-linea 0.35s ease-out both;
+        animation-delay: calc(0.9s + var(--i) * 0.14s);
+    }
+
+    /* Aparición al hacer scroll; app.js agrega .es-visible con IntersectionObserver. */
+    .js [data-aparecer] {
+        opacity: 0;
+        transform: translateY(1.25rem);
+        transition:
+            opacity 0.7s ease-out,
+            transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--retraso, 0ms);
+    }
+
+    .js [data-aparecer].es-visible {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes ticket-sale {
+    from {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes ticket-linea {
+    from {
+        opacity: 0;
+    }
+}

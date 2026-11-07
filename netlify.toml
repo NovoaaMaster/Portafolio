@@ -1,0 +1,9 @@
+# Netlify no ejecuta PHP al visitar la página. En cada push instala las dependencias
+# (Composer y npm), compila los assets y exporta el portafolio a dist/ como HTML fijo.
+[build]
+  command = "npm run build && php artisan portafolio:exportar"
+  publish = "dist"
+
+[build.environment]
+  PHP_VERSION = "8.3"
+  NODE_VERSION = "22"
